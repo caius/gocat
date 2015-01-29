@@ -11,7 +11,12 @@ var ARGV []string
 func main() {
 	ARGV = os.Args[1:]
 
-	if len(ARGV) >= 1 {
+	if len(ARGV) == 0 {
+		// Read stdin only
+		io.Copy(os.Stdout, os.Stdin)
+
+	} else {
+		// Read ARGV only
 		for _, filename := range ARGV {
 			if filename == "--" {
 				continue
@@ -32,5 +37,6 @@ func main() {
 			// Copy our output across!
 			io.Copy(os.Stdout, f)
 		}
+
 	}
 }
