@@ -25,7 +25,7 @@ func main() {
 			// Otherwise we're after a file itself
 			f, err := os.Open(filename)
 			if err != nil {
-				fmt.Printf("gocat: %s: No such file or directory\n", filename)
+				fmt.Fprintf(os.Stderr, "gocat: %s: No such file or directory\n", filename)
 				continue
 			}
 
