@@ -11,28 +11,27 @@ var ARGV []string
 func main() {
 	ARGV = os.Args[1:]
 
+	// If there are no arguments, then we read STDIN
 	if len(ARGV) == 0 {
-		// Read stdin only
-		io.Copy(os.Stdout, os.Stdin)
+		ARGV = append(ARGV, "-")
+	}
 
-	} else {
-		// Read ARGV only
-		for _, filename := range ARGV {
-			// - means read stdin as a special case
-			if filename == "-" {
-				filename = "/dev/stdin"
-			}
-
-			// Otherwise we're after a file itself
-			f, err := os.Open(filename)
-			if err != nil {
-				fmt.Fprintf(os.Stderr, "gocat: %s: No such file or directory\n", filename)
-				continue
-			}
-
-			// Copy our output across!
-			io.Copy(os.Stdout, f)
+	// Iterate arguments to read filenames
+	for _, filename := range ARGV {
+		// - means read stdin as a special case, we just use /dev/stdin instead
+		if filename == "-" {
+			filename = "/dev/stdin"
 		}
 
+		// Time to try and read the file in question
+		f, err := os.Open(filename)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "gocat: %s: No such file or directory\n", filename)
+			continue
+		}
+
+		// Copy our output across!
+		io.Copy(os.Stdout, f)
 	}
+
 }
