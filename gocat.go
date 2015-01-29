@@ -18,10 +18,6 @@ func main() {
 	} else {
 		// Read ARGV only
 		for _, filename := range ARGV {
-			if filename == "--" {
-				continue
-			}
-
 			// - means read stdin as a special case
 			if filename == "-" {
 				filename = "/dev/stdin"
