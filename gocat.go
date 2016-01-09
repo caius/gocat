@@ -26,7 +26,7 @@ func main() {
 		// Time to try and read the file in question
 		f, err := os.Open(filename)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "gocat: %s: No such file or directory\n", filename)
+			fmt.Fprintf(os.Stderr, "cat: %s: No such file or directory\n", filename)
 			continue
 		}
 
