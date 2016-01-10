@@ -7,9 +7,11 @@ import (
 )
 
 var ARGV []string
+var exitcode int
 
 func main() {
 	ARGV = os.Args[1:]
+	exitcode = 0
 
 	// If there are no arguments, then we read STDIN
 	if len(ARGV) == 0 {
@@ -27,6 +29,7 @@ func main() {
 		f, err := os.Open(filename)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "cat: %s: No such file or directory\n", filename)
+			exitcode = 1
 			continue
 		}
 
@@ -34,4 +37,5 @@ func main() {
 		io.Copy(os.Stdout, f)
 	}
 
+	os.Exit(exitcode)
 }
